@@ -1,4 +1,5 @@
 -cp src
--main Redis
+-cp test
+-main Test
 -cpp build
 -debug

@@ -107,65 +107,15 @@ typedef struct HXredisReply HXredisReply;
 
 
 class Redis {
-    public static function main(){
-        var n = new Redis();
-        n.test();
-    }
-
-    public function new(){
-    }
-
-    public function test(){
-        var connected = false;
-        try{
-            connect("127.0.0.1", 6379);
-            connected = true;
-        }catch(err:Dynamic){
-            trace(err);
-            connected = false;
-        }
-
-        while(true){
-            try{
-                if(connected){
-                    testBulk();
-                    Sys.sleep(1);
-                }else{
-                    Sys.sleep(1);
-                    reconnect();
-                    connected = true;
-                }
-            }catch(err:Dynamic){
-                connected = false;
-                trace(err);
-            }
-        }
-    }
-
-    function testBulk(){
-        appendCommand('SET A a');
-        appendCommand('SET B 1');
-        appendCommand('SET C 1.1');
-        appendCommand('SET D true');
-        appendCommand('INCR B');
-        trace(getBulkReply());
-        appendCommand('GET A');
-        appendCommand('GET B');
-        appendCommand('GET C');
-        appendCommand('GET D');
-        trace(getBulkReply());
-    }
-
     var context:Pointer<RedisContext>;
     var reader:Pointer<RedisReader>;
     var reply:RedisReplyPtr;
     var bulkSize = 0;
 
-    function free(){
-        __redisFree(context);
+    public function new(){
     }
     
-    function connect(host:String, port:Int):Void{
+    public function connect(host:String, port:Int):Void{
         context = __redisConnect(StdString.ofString(host).c_str(), port);
         try{
             checkError();
@@ -174,7 +124,7 @@ class Redis {
         }
     }
 
-    function reconnect():Void{
+    public function reconnect():Void{
         var i = __redisReconnect(context);
         trace(i);
         if(i == 0)
@@ -187,15 +137,7 @@ class Redis {
         }
     }
 
-    function checkError(){
-        var s:String = __checkError(context);
-        if(s != ""){
-            bulkSize = 0;
-            throw s;
-        }
-    }
-
-    function command(cmd:String):Dynamic{
+    public function command(cmd:String):Dynamic{
         var c = __command(context, cmd);
         try{
             checkError();
@@ -205,7 +147,7 @@ class Redis {
         return c;
     }
 
-    function appendCommand(cmd:String){
+    public function appendCommand(cmd:String){
         bulkSize++;
         __redisAppendCommand(context, StdString.ofString(cmd).c_str());
         try{
@@ -215,7 +157,7 @@ class Redis {
         }
     }
 
-    function getBulkReply():Array<String>{
+    public function getBulkReply():Array<String>{
         var arr = new Array<String>();
         while(bulkSize-- > 0)
             arr.push(cast getReply());
@@ -225,10 +167,16 @@ class Redis {
         return arr;
     }
 
+    function checkError(){
+        var s:String = __checkError(context);
+        if(s != ""){
+            bulkSize = 0;
+            throw s;
+        }
+    }
+
     function getReply():Dynamic{
-        
         var res = __getReply(context);
-        // trace(res.type, res.str, res.error, res.integer, res.dval, res.len);
         if(res.error){
             throw res.str;
         }
@@ -294,10 +242,6 @@ class Redis {
     @:extern
     @:native("redisAppendCommand")
     public static function __redisAppendCommand(context:Pointer<RedisContext>, command:ConstPointer<Char>):Int;
-
-    @:extern
-    @:native("redisFree")
-    public static function __redisFree(context:Pointer<RedisContext>):Void;
 
     @:extern
     @:native("redisConnect")

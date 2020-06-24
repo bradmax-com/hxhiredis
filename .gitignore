@@ -1,2 +1,8 @@
 
 .DS_Store
+build
+hiredis/*.o
+hiredis/*.a
+hiredis/*.dylib
+hiredis/hiredis-test
+hiredis/hiredis.pc

@@ -1,0 +1,2 @@
+cd hiredis
+make
