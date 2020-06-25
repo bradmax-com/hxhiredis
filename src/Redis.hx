@@ -253,15 +253,15 @@ class Redis {
 
     @:extern
     @:native("redisReaderCreate")
-    public static function __redisReaderCreate():Pointer<RedisReader>;
+    public static function __redisReaderCreate():Pointer<RedisReader>:Void return null;
 
     @:extern
     @:native("redisReaderFree")
-    public static function __redisReaderFree(reader:Pointer<RedisReader>):Void;
+    public static function __redisReaderFree(reader:Pointer<RedisReader>):Void return null;
 
     @:extern
     @:native("redisReaderFeed")
-    public static function __redisReaderFeed(reader:Pointer<RedisReader>, buffer:ConstCharStar, size:Int):Void;
+    public static function __redisReaderFeed(reader:Pointer<RedisReader>, buffer:ConstCharStar, size:Int):Void return null;
 
     @:extern
     @:native("__getReply")
@@ -277,7 +277,7 @@ class Redis {
 
     @:extern
     @:native("freeReplyObject")
-    public static function __freeReplyObject(reply:RedisReplyPtr):Void;
+    public static function __freeReplyObject(reply:RedisReplyPtr):Void return null;
 
     @:extern
     @:native("redisAppendCommand")
