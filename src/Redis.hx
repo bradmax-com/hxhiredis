@@ -253,7 +253,7 @@ class Redis {
 
     @:extern
     @:native("redisReaderCreate")
-    public static function __redisReaderCreate():Pointer<RedisReader>:Void return null;
+    public static function __redisReaderCreate():Pointer<RedisReader> return null;
 
     @:extern
     @:native("redisReaderFree")
