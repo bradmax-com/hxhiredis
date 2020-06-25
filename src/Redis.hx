@@ -20,15 +20,9 @@ import haxe.ds.Vector;
 <files id="haxe">
     <compilerflag value="-I${root}/cpp/"/>
 </files>
-
-<files id="__main__">
-</files>
-
-
 <target id="haxe">
     <flag value="-I${root}hiredis" />
     <flag value="-L${root}hiredis/" />
-
     <lib name="-lhiredis"/>
 </target>
 ')
@@ -57,6 +51,7 @@ extern class RedisContext {}
 @:structAccess
 @:native("redisReader")
 extern class RedisReader {}
+
 @:unreflective
 @:structAccess
 @:native("HXredisReplyArray")
@@ -80,7 +75,6 @@ class HXredisReply {
 }
 
 @:headerCode('
-
 typedef struct HXredisReply HXredisReply;
     struct HXredisReply {
         bool error;
@@ -97,7 +91,6 @@ typedef struct HXredisReply HXredisReply;
 
 @:headerInclude('./../cpp/Import.h')
 @:cppInclude('./../cpp/HxGlue.cpp')
-
 
 class Redis {
     public static inline var HX_REDIS_ERR = -1;
@@ -125,7 +118,6 @@ class Redis {
     public static inline var HX_REDIS_REPLY_BIGNUM = 13;
     public static inline var HX_REDIS_REPLY_VERB = 14;
 
-
     var context:Pointer<RedisContext>;
     var reader:Pointer<RedisReader>;
     var reply:RedisReplyPtr;
@@ -145,9 +137,8 @@ class Redis {
 
     public function reconnect():Void{
         var i = __redisReconnect(context);
-        if(i == 0)
-            return;
 
+        if(i == 0) return;
         try{
             checkError();
         }catch(err:Dynamic){
@@ -157,6 +148,7 @@ class Redis {
 
     public function command(cmd:String):Dynamic{
         var c = __command(context, cmd);
+
         try{
             checkError();
         }catch(err:Dynamic){
@@ -177,20 +169,19 @@ class Redis {
 
     public function getBulkReply():Array<String>{
         var arr = new Array<String>();
+
         while(bulkSize-- > 0){
             var rep:Dynamic = cast getReply();
             if(rep != null)
                 arr.push(rep);
         }
-            
-
-
         bulkSize = 0;
         return arr;
     }
 
     function checkError(){
         var s:String = __checkError(context);
+
         if(s != ""){
             bulkSize = 0;
             throw s;
@@ -200,6 +191,7 @@ class Redis {
     function getReply():Dynamic{
         var resPointer = __getReply(context);
         var res = resPointer.ref;
+
         if(res.error){
             throw res.str;
         }
@@ -269,7 +261,6 @@ class Redis {
         return buffer.toString();
     }
 
-
     @:extern
     @:native("redisReaderCreate")
     public static function __redisReaderCreate():Pointer<RedisReader>;
@@ -309,5 +300,4 @@ class Redis {
     @:extern
     @:native("redisReconnect")
     public static function __redisReconnect(c:Pointer<RedisContext>):Int return null;
-
 }

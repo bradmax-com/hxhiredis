@@ -8,7 +8,6 @@ using namespace std;
 String __checkError(redisContext *c){
     bool isNull = c == NULL;
     bool err = ((redisContext *)c)->err;
-    // String errstr = String::create("dupa");
     String errstr = String::create(((redisContext *)c)->errstr, 128);
     if(isNull){
         return String("Can't allocate redis context");        
