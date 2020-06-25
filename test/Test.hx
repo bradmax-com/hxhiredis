@@ -3,28 +3,60 @@ package;
 class Test{
 
     public static function main(){
-        var n = new Redis();
-        n.test();
+        new Test();
+    }
+
+    var r = new Redis();
+
+    public function new(){
+        test();
     }
 
     public function test(){
+        r = new Redis();
         var connected = false;
         try{
-            connect("127.0.0.1", 6379);
+            r.connect("127.0.0.1", 6379);
             connected = true;
         }catch(err:Dynamic){
             trace(err);
             connected = false;
         }
 
+        // var i = 10;
+        // try{
+        //     while(true){
+        //         r.appendCommand('SET A a');
+        //         r.appendCommand('SET B 1');
+        //         r.appendCommand('SET C 1.1');
+        //         r.appendCommand('SET D true');
+        //         r.appendCommand('INCR B');
+        //         r.appendCommand('GET A');
+        //         r.appendCommand('GET B');
+        //         r.appendCommand('GET C');
+        //         r.appendCommand('GET D');
+        //         trace(r.getBulkReply());
+        //         r.appendCommand("SADD setx 1");
+        //         r.appendCommand("SADD setx 2");
+        //         r.appendCommand("SADD setx 3");
+        //         r.appendCommand("SADD setx dupa");
+        //         r.appendCommand("SCARD setx");
+        //         r.appendCommand("SMEMBERS setx");
+        //         trace(r.getBulkReply());
+        //     }
+        // }catch(err:Dynamic){
+        //     trace(err);
+        //     connected = false;
+        // }
+
         while(true){
             try{
                 if(connected){
                     testBulk();
-                    Sys.sleep(1);
+                    // Sys.sleep(1);
                 }else{
                     Sys.sleep(1);
-                    reconnect();
+                    r.reconnect();
                     connected = true;
                 }
             }catch(err:Dynamic){
@@ -35,16 +67,21 @@ class Test{
     }
 
     function testBulk(){
-        appendCommand('SET A a');
-        appendCommand('SET B 1');
-        appendCommand('SET C 1.1');
-        appendCommand('SET D true');
-        appendCommand('INCR B');
-        trace(getBulkReply());
-        appendCommand('GET A');
-        appendCommand('GET B');
-        appendCommand('GET C');
-        appendCommand('GET D');
-        trace(getBulkReply());
+        r.appendCommand('SET A a');
+        r.appendCommand('SET B 1');
+        r.appendCommand('SET C 1.1');
+        r.appendCommand('SET D true');
+        r.appendCommand('INCR B');
+        trace(r.getBulkReply());
+        r.appendCommand('GET A');
+        r.appendCommand('GET B');
+        r.appendCommand('GET C');
+        r.appendCommand('GET D');
+        r.appendCommand("SADD setx 2");
+        r.appendCommand("SADD setx 3");
+        r.appendCommand("SADD setx dupa");
+        r.appendCommand("SCARD setx");
+        r.appendCommand("SMEMBERS setx");
+        trace(r.getBulkReply());
     }
 }
