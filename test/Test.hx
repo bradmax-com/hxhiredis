@@ -23,32 +23,6 @@ class Test{
             connected = false;
         }
 
-        // var i = 10;
-        // try{
-        //     while(true){
-        //         r.appendCommand('SET A a');
-        //         r.appendCommand('SET B 1');
-        //         r.appendCommand('SET C 1.1');
-        //         r.appendCommand('SET D true');
-        //         r.appendCommand('INCR B');
-        //         r.appendCommand('GET A');
-        //         r.appendCommand('GET B');
-        //         r.appendCommand('GET C');
-        //         r.appendCommand('GET D');
-        //         trace(r.getBulkReply());
-        //         r.appendCommand("SADD setx 1");
-        //         r.appendCommand("SADD setx 2");
-        //         r.appendCommand("SADD setx 3");
-        //         r.appendCommand("SADD setx dupa");
-        //         r.appendCommand("SCARD setx");
-        //         r.appendCommand("SMEMBERS setx");
-        //         trace(r.getBulkReply());
-        //     }
-        // }catch(err:Dynamic){
-        //     trace(err);
-        //     connected = false;
-        // }
-
         while(true){
             try{
                 if(connected){
@@ -67,12 +41,14 @@ class Test{
     }
 
     function testBulk(){
+        for(i in 0...100000){
+            r.appendCommand('SADD bigset $i');
+        }
         r.appendCommand('SET A a');
         r.appendCommand('SET B 1');
         r.appendCommand('SET C 1.1');
         r.appendCommand('SET D true');
         r.appendCommand('INCR B');
-        trace(r.getBulkReply());
         r.appendCommand('GET A');
         r.appendCommand('GET B');
         r.appendCommand('GET C');
@@ -82,6 +58,7 @@ class Test{
         r.appendCommand("SADD setx dupa");
         r.appendCommand("SCARD setx");
         r.appendCommand("SMEMBERS setx");
+        r.appendCommand("SCARD bigset");
         trace(r.getBulkReply());
     }
 }

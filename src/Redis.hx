@@ -3,17 +3,8 @@ package;
 import cpp.ConstPointer;
 import cpp.StdString;
 import cpp.Char;
-import cpp.Star;
-import cpp.ConstStar;
-import cpp.CastCharStar;
 import cpp.ConstCharStar;
-import cpp.RawConstPointer;
-import cpp.RawPointer;
 import cpp.Pointer;
-import cpp.NativeString;
-import cpp.NativeArray;
-import haxe.ds.Vector;
-
 
 @:buildXml('
 <set name="root" value="../" />
@@ -60,8 +51,7 @@ extern class HXredisReplyArrayAccess {}
 @:unreflective
 @:structAccess
 @:native("HXredisReply")
-extern 
-class HXredisReply {
+extern class HXredisReply {
     public function new(){}
     public var error:Bool;
     public var type:Int;
