@@ -281,7 +281,7 @@ class Redis {
 
     @:extern
     @:native("redisAppendCommand")
-    public static function __redisAppendCommand(context:Pointer<RedisContext>, command:ConstPointer<Char>):Int;
+    public static function __redisAppendCommand(context:Pointer<RedisContext>, command:ConstPointer<Char>):Int return null;
 
     @:extern
     @:native("redisConnect")
