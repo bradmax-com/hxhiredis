@@ -24,6 +24,7 @@ HXredisReply *__command(redisContext *c, String cmd){
     // bool isNull = res == NULL;
     // if(isNull)
     //     return String("");
+    std::cout << "\n" << ((redisReply *)res)->type << " " << ((redisReply *)res)->str << " " << ((redisReply *)res)->integer << " " << ((redisReply *)res)->vtype << " " << ((redisReply *)res)->elements << "\n";
 
     rep->error = false;
     rep->str = String::create(((redisReply *)res)->str);
