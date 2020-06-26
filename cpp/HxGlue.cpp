@@ -19,12 +19,12 @@ String __checkError(redisContext *c){
 }
 
 String __command(redisContext *c, String cmd){
-    redisReply *res = redisCommand((redisContext *)c, cmd.__s);
+    void *res = redisCommand((redisContext *)c, cmd.__s);
     // bool isNull = res == NULL;
     // if(isNull)
     //     return String("");
     
-    String response = String::create(res->str);
+    String response = String::create(((redisReply *)res)->str);
     freeReplyObject(res);
     return response;
 }
