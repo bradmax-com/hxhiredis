@@ -137,14 +137,31 @@ class Redis {
     }
 
     public function command(cmd:String):Dynamic{
-        var c = __command(context, cmd);
+        var resPointer = __command(context, cmd);
+        var res = resPointer.ref;
+
+        if(res.error){
+            throw res.str;
+        }
+
+        var retValue:Dynamic = readReplyObject(res);
 
         try{
             checkError();
         }catch(err:Dynamic){
             throw err;
         }
-        return c;
+
+        untyped __cpp__("__freeHXredisReply({0})", resPointer);
+        return retValue;
+
+        // var c = __command(context, cmd);
+        // try{
+        //     checkError();
+        // }catch(err:Dynamic){
+        //     throw err;
+        // }
+        // return c;
     }
 
     public function appendCommand(cmd:String){
@@ -269,7 +286,7 @@ class Redis {
 
     @:extern
     @:native("__command")
-    public static function __command(c:Pointer<RedisContext>, cmd:String):String return null;
+    public static function __command(c:Pointer<RedisContext>, cmd:String):Pointer<HXredisReply> return null;
 
     @:extern
     @:native("__checkError")

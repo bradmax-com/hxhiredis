@@ -18,15 +18,25 @@ String __checkError(redisContext *c){
     }
 }
 
-String __command(redisContext *c, String cmd){
+HXredisReply *__command(redisContext *c, String cmd){
     void *res = redisCommand((redisContext *)c, cmd.__s);
+    HXredisReply *rep = new HXredisReply();
     // bool isNull = res == NULL;
     // if(isNull)
     //     return String("");
+
+    rep->error = false;
+    rep->str = String::create(((redisReply *)res)->str);
+    rep->type = ((redisReply *)res)->type;
+    rep->integer = ((redisReply *)res)->integer;
+    rep->dval = ((redisReply *)res)->dval;
+    rep->len = ((redisReply *)res)->len;
+    rep->vtype = ((redisReply *)res)->vtype;
+    rep->elements = ((redisReply *)res)->elements;
     
-    String response = String::create(((redisReply *)res)->str);
+    // String response = String::create(((redisReply *)res)->str);
     freeReplyObject(res);
-    return response;
+    return rep;
 }
 
 void __freeHXredisReply(struct HXredisReply *rep){
