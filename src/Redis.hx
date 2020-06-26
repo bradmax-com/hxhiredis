@@ -78,8 +78,8 @@ typedef struct HXredisReply HXredisReply;
     };
 ')
 
-@:headerInclude('./../cpp/Import.h')
-@:cppInclude('./../cpp/HxGlue.cpp')
+@:headerInclude('./../cpp/HxRedisImport.h')
+@:cppInclude('./../cpp/HxRedisGlue.cpp')
 
 class Redis {
     public static inline var HX_REDIS_ERR = -1;
