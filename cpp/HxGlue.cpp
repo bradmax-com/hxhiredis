@@ -20,20 +20,20 @@ String __checkError(redisContext *c){
 
 HXredisReply *__command(redisContext *c, String cmd){
     void *res = redisCommand((redisContext *)c, cmd.__s);
-    HXredisReply *rep = new HXredisReply();
     bool isNull = res == NULL;
     if(isNull){
-        // return String("");
         std::cout << "\nNULL\n";
+        // return String("");
     }else{
-        std::cout << "\n" << ((redisReply *)res)->type << "\n";
-        int status = ((redisReply *)res)->type;
-        if(status == 1){
+        int type = ((redisReply *)res)->type;
+        std::cout << "\ntype: " << type << "\n";
+        if(type == 1){
             std::cout << "\n" << ((redisReply *)res)->len << ":" << ((redisReply *)res)->str << "\n";
         }
     }
     
 
+    HXredisReply *rep = new HXredisReply();
     rep->error = false;
     rep->str = String::create(((redisReply *)res)->str);
     rep->type = ((redisReply *)res)->type;

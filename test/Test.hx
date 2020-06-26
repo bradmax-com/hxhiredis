@@ -43,24 +43,26 @@ class Test{
     }
 
     function testBulk(){
-        for(i in 0...100){
-            r.appendCommand('SADD bigset $i');
-        }
-        r.appendCommand('SET A a');
-        r.appendCommand('SET B 1');
-        r.appendCommand('SET C 1.1');
-        r.appendCommand('SET D true');
-        r.appendCommand('INCR B');
-        r.appendCommand('GET A');
-        r.appendCommand('GET B');
-        r.appendCommand('GET C');
-        r.appendCommand('GET D');
-        r.appendCommand("SADD setx 2");
-        r.appendCommand("SADD setx 3");
-        r.appendCommand("SADD setx dupa");
-        r.appendCommand("SCARD setx");
-        r.appendCommand("SMEMBERS setx");
-        r.appendCommand("SCARD bigset");
-        trace(r.getBulkReply());
+        trace(r.command('SET A a'));
+        trace(r.command('GET A'));
+        // for(i in 0...100){
+        //     r.appendCommand('SADD bigset $i');
+        // }
+        // r.appendCommand('SET A a');
+        // r.appendCommand('SET B 1');
+        // r.appendCommand('SET C 1.1');
+        // r.appendCommand('SET D true');
+        // r.appendCommand('INCR B');
+        // r.appendCommand('GET A');
+        // r.appendCommand('GET B');
+        // r.appendCommand('GET C');
+        // r.appendCommand('GET D');
+        // r.appendCommand("SADD setx 2");
+        // r.appendCommand("SADD setx 3");
+        // r.appendCommand("SADD setx dupa");
+        // r.appendCommand("SCARD setx");
+        // r.appendCommand("SMEMBERS setx");
+        // r.appendCommand("SCARD bigset");
+        // trace(r.getBulkReply());
     }
 }
