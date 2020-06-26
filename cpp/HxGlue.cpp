@@ -27,6 +27,9 @@ HXredisReply *__command(redisContext *c, String cmd){
         std::cout << "\nNULL\n";
     }else{
         std::cout << "\n" << ((redisReply *)res)->type << "\n";
+        if((redisReply *)res)->type == 1){
+            std::cout << "\n" << ((redisReply *)res)->len << ":" << ((redisReply *)res)->str << "\n";
+        }
     }
     
 
