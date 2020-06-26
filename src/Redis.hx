@@ -52,7 +52,6 @@ extern class HXredisReplyArrayAccess {}
 @:structAccess
 @:native("HXredisReply")
 extern class HXredisReply {
-    public function new(){}
     public var error:Bool;
     public var type:Int;
     public var integer:Int;
@@ -271,41 +270,41 @@ class Redis {
 
     @:extern
     @:native("redisReaderCreate")
-    public static function __redisReaderCreate():Pointer<RedisReader> return null;
+    public static function __redisReaderCreate():Pointer<RedisReader>;
 
     @:extern
     @:native("redisReaderFree")
-    public static function __redisReaderFree(reader:Pointer<RedisReader>):Void return null;
+    public static function __redisReaderFree(reader:Pointer<RedisReader>):Void;
 
     @:extern
     @:native("redisReaderFeed")
-    public static function __redisReaderFeed(reader:Pointer<RedisReader>, buffer:ConstCharStar, size:Int):Void return null;
+    public static function __redisReaderFeed(reader:Pointer<RedisReader>, buffer:ConstCharStar, size:Int):Void;
 
     @:extern
     @:native("__getReply")
-    public static function __getReply(c:Pointer<RedisContext>):Pointer<HXredisReply> return null;
+    public static function __getReply(c:Pointer<RedisContext>):Pointer<HXredisReply>;
 
     @:extern
     @:native("__command")
-    public static function __command(c:Pointer<RedisContext>, cmd:String):Pointer<HXredisReply> return null;
+    public static function __command(c:Pointer<RedisContext>, cmd:String):Pointer<HXredisReply>;
 
     @:extern
     @:native("__checkError")
-    public static function __checkError(c:Pointer<RedisContext>):String return null;
+    public static function __checkError(c:Pointer<RedisContext>):String;
 
     @:extern
     @:native("freeReplyObject")
-    public static function __freeReplyObject(reply:RedisReplyPtr):Void return null;
+    public static function __freeReplyObject(reply:RedisReplyPtr):Void;
 
     @:extern
     @:native("redisAppendCommand")
-    public static function __redisAppendCommand(context:Pointer<RedisContext>, command:ConstPointer<Char>):Int return null;
+    public static function __redisAppendCommand(context:Pointer<RedisContext>, command:ConstPointer<Char>):Int;
 
     @:extern
     @:native("redisConnect")
-    public static function __redisConnect(host:ConstPointer<Char>, port:Int):Pointer<RedisContext> return null;
+    public static function __redisConnect(host:ConstPointer<Char>, port:Int):Pointer<RedisContext>;
 
     @:extern
     @:native("redisReconnect")
-    public static function __redisReconnect(c:Pointer<RedisContext>):Int return null;
+    public static function __redisReconnect(c:Pointer<RedisContext>):Int;
 }
