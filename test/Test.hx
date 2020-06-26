@@ -16,7 +16,9 @@ class Test{
         r = new Redis();
         var connected = false;
         try{
-            r.connect("127.0.0.1", 6379);
+            r.connect("bradmax-redis.kelmfo.clustercfg.euc1.cache.amazonaws.com", 6379);
+            // r.connect("172.31.7.94", 6379);
+            // r.connect("127.0.0.1", 6379);
             connected = true;
         }catch(err:Dynamic){
             trace(err);
