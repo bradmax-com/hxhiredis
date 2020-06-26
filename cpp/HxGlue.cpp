@@ -21,10 +21,14 @@ String __checkError(redisContext *c){
 HXredisReply *__command(redisContext *c, String cmd){
     void *res = redisCommand((redisContext *)c, cmd.__s);
     HXredisReply *rep = new HXredisReply();
-    // bool isNull = res == NULL;
-    // if(isNull)
-    //     return String("");
-    std::cout << "\n" << ((redisReply *)res)->type << " " << ((redisReply *)res)->str << " " << ((redisReply *)res)->integer << " " << ((redisReply *)res)->vtype << " " << ((redisReply *)res)->elements << "\n";
+    bool isNull = res == NULL;
+    if(isNull){
+        // return String("");
+        std::cout << "\nNULL\n" <<
+    }else{
+        std::cout << "\n" << ((redisReply *)res)->type << " " << ((redisReply *)res)->str << " " << ((redisReply *)res)->integer << " " << ((redisReply *)res)->vtype << " " << ((redisReply *)res)->elements << "\n";
+    }
+    
 
     rep->error = false;
     rep->str = String::create(((redisReply *)res)->str);
