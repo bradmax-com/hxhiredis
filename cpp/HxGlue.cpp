@@ -26,7 +26,7 @@ HXredisReply *__command(redisContext *c, String cmd){
         // return String("");
         std::cout << "\nNULL\n";
     }else{
-        std::cout << "\n" << ((redisReply *)res)->type << " " << ((redisReply *)res)->str << " " << ((redisReply *)res)->integer << " " << ((redisReply *)res)->vtype << " " << ((redisReply *)res)->elements << "\n";
+        std::cout << "\n" << ((redisReply *)res)->type << "\n";
     }
     
 
