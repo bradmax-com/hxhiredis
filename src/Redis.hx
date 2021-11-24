@@ -7,7 +7,8 @@ import cpp.ConstCharStar;
 import cpp.Pointer;
 
 @:buildXml('
-<set name="root" value="../" />
+<!--<set name="root" value="../" />-->
+<set name="root" value="${haxelib:hxhiredis}/" />
 <files id="haxe">
     <compilerflag value="-I${root}/cpp/"/>
 </files>
@@ -64,6 +65,8 @@ extern class HXredisReply {
 }
 
 @:headerCode('
+#include <../../cpp/HxRedisImport.h>
+
 typedef struct HXredisReply HXredisReply;
     struct HXredisReply {
         bool error;
@@ -78,8 +81,8 @@ typedef struct HXredisReply HXredisReply;
     };
 ')
 
-@:headerInclude('./../cpp/HxRedisImport.h')
-@:cppInclude('./../cpp/HxRedisGlue.cpp')
+@:headerInclude('../../cpp/HxRedisImport.h')
+@:cppInclude('../../cpp/HxRedisGlue.cpp')
 
 class Redis {
     public static inline var HX_REDIS_ERR = -1;
@@ -138,6 +141,7 @@ class Redis {
     public function command(cmd:String):Dynamic{
         var resPointer = __command(context, cmd);
         var res = resPointer.ref;
+        trace("ERROR: "+res.error);
 
         if(res.error){
             throw res.str;

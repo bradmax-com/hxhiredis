@@ -28,7 +28,10 @@ class Test{
         while(true){
             try{
                 if(connected){
-                    testBulk();
+
+                    var res = r.command('SMEMBERS clients');
+                    trace(res);
+                    // testBulk();
                     // Sys.sleep(1);
                 }else{
                     Sys.sleep(1);
@@ -39,6 +42,7 @@ class Test{
                 connected = false;
                 trace(err);
             }
+            Sys.sleep(3);
         }
     }
 
