@@ -7,7 +7,6 @@ import cpp.ConstCharStar;
 import cpp.Pointer;
 
 @:buildXml('
-<!--<set name="root" value="../" />-->
 <set name="root" value="${haxelib:hxhiredis}/" />
 <files id="haxe">
     <compilerflag value="-I${root}/cpp/"/>
@@ -157,14 +156,6 @@ class Redis {
 
         untyped __cpp__("__freeHXredisReply({0})", resPointer);
         return retValue;
-
-        // var c = __command(context, cmd);
-        // try{
-        //     checkError();
-        // }catch(err:Dynamic){
-        //     throw err;
-        // }
-        // return c;
     }
 
     public function appendCommand(cmd:String){
